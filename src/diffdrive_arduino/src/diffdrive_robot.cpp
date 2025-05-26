@@ -14,6 +14,7 @@ int main(int argc, char **argv)
   n.getParam("right_wheel_name", robot_cfg.right_wheel_name);
   n.getParam("baud_rate", robot_cfg.baud_rate);
   n.getParam("device", robot_cfg.device);
+  n.getParam("enc_counts_per_rev", robot_cfg.enc_counts_per_rev);
   n.getParam("robot_loop_rate", robot_cfg.loop_rate);
   
 
@@ -23,7 +24,7 @@ int main(int argc, char **argv)
   ros::AsyncSpinner spinner(1);
   spinner.start();
 
-  ros::Time prevTime = ros::Time::now();
+  ros::Time prevTime = ros::Time(0); //ros::Time::now();
 
   ros::Rate loop_rate(10);
 
