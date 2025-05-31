@@ -51,7 +51,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
 
   for (const hardware_interface::ComponentInfo & joint : info_.joints)
   {
-    // DiffBotSystem has exactly two states and one command interface on each joint
+    // DiffBotSystem has exactly one state and one command interface on each joint
     if (joint.command_interfaces.size() != 1)
     {
       RCLCPP_FATAL(
@@ -79,7 +79,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
       return hardware_interface::CallbackReturn::ERROR;
     }
 
-    if (joint.state_interfaces[1].name != hardware_interface::HW_IF_VELOCITY)
+    if (joint.state_interfaces[0].name != hardware_interface::HW_IF_VELOCITY)
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("DiffDriveArduinoHardware"),
