@@ -34,6 +34,7 @@ diffbot_base_controller:
     #publish_limited_velocity: true
     use_stamped_vel: false
     #velocity_rolling_window_size: 10
+    position_feedback: false
 
     # Velocity and acceleration limits
     # Whenever a min_* is unspecified, default to -max_*
