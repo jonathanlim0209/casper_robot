@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+ 
+  <xacro:if value= "${not materials_included}">
+    <xacro:property name="materials_included" value="true"/>
+
+    <material name="my_white"> 
+      <color rgba="1 1 1 1" />  
+    </material> 
+      
+    <material name="my_orange">  
+      <color rgba="1 0.3 0.1 1"/> 
+    </material> 
+      
+    <material name="my_blue">  
+      <color rgba="0.2 0.2 1 1"/> 
+    </material> 
+      
+    <material name="my_black"> 
+      <color rgba="0 0 0 1"/> 
+    </material> 
+      
+    <material name="my_red"> 
+      <color rgba="1 0 0 1"/> 
+    </material> 
+      
+    <material name="my_green"> 
+      <color rgba="0 1 0 1"/> 
+    </material>
+
+  </xacro:if> 
+
+</robot>

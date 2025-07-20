@@ -3,26 +3,11 @@
 
     <xacro:include filename="inertial_macros.xacro"/>
     <xacro:include filename="robot_properties.xacro"/>
+    <xacro:property name="materials_included" value="false"/>
+    <xacro:include filename="materials.xacro"/>
+    <xacro:include filename="camera.xacro"/>
 
-    <material name="white">
-        <color rgba="1 1 1 1" />
-    </material>
-
-    <material name="orange">
-        <color rgba="1 0.3 0.1 1"/>
-    </material>
-
-    <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-    </material>
-
-    <material name="black">
-        <color rgba="0 0 0 1"/>
-    </material>
-
-    <material name="red">
-        <color rgba="1 0 0 1"/>
-    </material>
+    
 
     <!-- BASE LINK -->
 
@@ -56,7 +41,7 @@
             <geometry>
                 <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
             </geometry>
-            <material name="orange"/>
+            <material name="my_orange"/>
         </visual>
         <collision>
             <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
@@ -87,7 +72,7 @@
             <geometry>
                 <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
             </geometry>
-            <material name="blue"/>
+            <material name="my_blue"/>
         </visual>
         <collision>
             <geometry>
@@ -118,7 +103,7 @@
             <geometry>
                 <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
             </geometry>
-            <material name="blue"/>
+            <material name="my_blue"/>
         </visual>
         <collision>
             <geometry>
@@ -149,7 +134,7 @@
             <geometry>
                 <sphere radius="${caster_wheel_radius}"/>
             </geometry>
-            <material name="white"/>
+            <material name="my_white"/>
         </visual>
         <collision>
             <geometry>
@@ -166,6 +151,11 @@
         <mu1 value="0.001"/>
         <mu2 value="0.001"/>
     </gazebo>
+
+
+
+    <!-- CAMERA MODULE  -->
+    <xacro:camera_module parent_link="chassis"/>
 
     <gazebo>
         <disable_collisions>
