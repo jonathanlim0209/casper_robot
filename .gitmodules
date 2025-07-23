@@ -1,0 +1,3 @@
+[submodule "src/cam_tracker"]
+	path = src/cam_tracker
+	url = https://github.com/jonathanlim0209/cam_tracker.git
