@@ -9,3 +9,8 @@ twist_mux:
         topic   : cmd_vel_tracker
         timeout : 0.5
         priority: 20
+
+      ball_tracker:
+        topic   : cmd_vel_tracker
+        timeout : 0.5
+        priority: 20
