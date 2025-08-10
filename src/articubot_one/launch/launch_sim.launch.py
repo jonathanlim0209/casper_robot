@@ -64,13 +64,6 @@ def generate_launch_description():
         arguments=["joint_broad"],
     )
 
-
-    # Code for delaying a node (I haven't tested how effective it is)
-    # 
-    # First add the below lines to imports
-
-    #
-    # Then add the following below the current diff_drive_spawner
     delayed_diff_drive_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=spawn_entity,
@@ -84,11 +77,21 @@ def generate_launch_description():
         on_exit=[joint_broad_spawner],
     )
     )
+
+    camera = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory("ball_tracker"), 'launch', 'ball_tracker.launch.py')]),
+
+        launch_arguments={
+            'params_file': os.path.join(get_package_share_directory('ball_tracker'), 'config', 'ball_tracker_params_example.yaml'),
+            'image_topic': '/camera/image_raw',
+            'cmd_vel_topic': '/cmd_vel_tracker',
+            'enable_3d_tracker': 'true', 
+            'detect_only': 'true',
+            "tune_detection": 'true',
+        }.items()    
+    )               
     
-    # Replace the diff_drive_spawner in the final return with delayed_diff_drive_spawner
-
-
-
     # Launch them all!
     return LaunchDescription([
         rsp,
@@ -98,4 +101,5 @@ def generate_launch_description():
         spawn_entity,
         delayed_joint_broad_spawner,
         delayed_diff_drive_spawner,
+        camera
     ])
