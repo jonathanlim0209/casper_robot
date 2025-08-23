@@ -10,6 +10,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch.actions import RegisterEventHandler
 from launch.event_handlers import OnProcessExit
+from launch.event_handlers import OnProcessStart
 
 
 
@@ -44,6 +45,8 @@ def generate_launch_description():
                     get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
                     launch_arguments={'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items()
              )
+    
+
 
     # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
@@ -78,19 +81,26 @@ def generate_launch_description():
     )
     )
 
-    camera = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory("ball_tracker"), 'launch', 'ball_tracker.launch.py')]),
+    cv_launcher = Node(
+            package='cv_launcher',
+            executable='cv_window_node',
+            name='cv_window_node',
+            output='screen'
+        )
 
-        launch_arguments={
-            'params_file': os.path.join(get_package_share_directory('ball_tracker'), 'config', 'ball_tracker_params_example.yaml'),
-            'image_topic': '/camera/image_raw',
-            'cmd_vel_topic': '/cmd_vel_tracker',
-            'enable_3d_tracker': 'true', 
-            'detect_only': 'true',
-            "tune_detection": 'true',
-        }.items()    
-    )               
+    # camera = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([os.path.join(
+    #         get_package_share_directory("ball_tracker"), 'launch', 'ball_tracker.launch.py')]),
+
+    #     launch_arguments={
+    #         'params_file': os.path.join(get_package_share_directory('ball_tracker'), 'config', 'ball_tracker_params_example.yaml'),
+    #         'image_topic': '/camera/image_raw',
+    #         'cmd_vel_topic': '/cmd_vel_tracker',
+    #         'enable_3d_tracker': 'true', 
+    #         'detect_only': 'true',
+    #         "tune_detection": 'true',
+    #     }.items()    
+    # )               
     
     # Launch them all!
     return LaunchDescription([
@@ -101,5 +111,6 @@ def generate_launch_description():
         spawn_entity,
         delayed_joint_broad_spawner,
         delayed_diff_drive_spawner,
-        camera
+        #camera,
+        cv_launcher
     ])
