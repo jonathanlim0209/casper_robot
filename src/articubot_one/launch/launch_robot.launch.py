@@ -92,7 +92,7 @@ def generate_launch_description():
             os.path.join(
                 get_package_share_directory("camera_stream"),
                 'launch', 
-                'camera_stream.launch.py'
+                'camera_publisher.launch.py'
             )
         )
     )
