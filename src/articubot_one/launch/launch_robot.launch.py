@@ -87,25 +87,25 @@ def generate_launch_description():
         )
     )
 
-    # camera_stream_launch = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(
-    #             get_package_share_directory("camera_stream"),
-    #             'launch', 
-    #             'camera_stream.launch.py'
-    #         )
-    #     )
-    # )
-
-    camera_publisher_launch = IncludeLaunchDescription(
+    camera_stream_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("camera_publisher"),
+                get_package_share_directory("camera_stream"),
                 'launch', 
-                'camera_publisher.launch.py'
+                'camera_stream.launch.py'
             )
         )
     )
+
+    # camera_publisher_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(
+    #             get_package_share_directory("camera_publisher"),
+    #             'launch', 
+    #             'camera_publisher.launch.py'
+    #         )
+    #     )
+    # )
 
 
     # Code for delaying a node (I haven't tested how effective it is)
@@ -134,5 +134,5 @@ def generate_launch_description():
         delayed_controller_manager,
         delayed_diff_drive_spawner,
         delayed_joint_broad_spawner,
-        camera_publisher_launch
+        camera_stream_launch
     ])
