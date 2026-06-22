@@ -25,7 +25,7 @@ def generate_launch_description():
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
+                )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'false'}.items()
     )
 
 
@@ -81,6 +81,18 @@ def generate_launch_description():
     )
     )
 
+
+    bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')
+    ros_gz_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=[
+            '--ros-args',
+            '-p',
+            f'config_file:={bridge_params}',
+        ]
+    )
+
     cv_launcher = Node(
             package='cv_launcher',
             executable='cv_window_node',
@@ -111,6 +123,7 @@ def generate_launch_description():
         spawn_entity,
         delayed_joint_broad_spawner,
         delayed_diff_drive_spawner,
+        ros_gz_bridge,
         #camera,
         cv_launcher
     ])

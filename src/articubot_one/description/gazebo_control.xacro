@@ -27,6 +27,13 @@
             <publish_wheel_tf>true</publish_wheel_tf>
 
         </plugin>
+
+        <plugin name="gz::sim::systems::JointStatePublisher" filename="gz-sim-joint-state-publisher-system">
+            <topic>joint_states</topic>
+            <joint_name>left_wheel_joint</joint_name>
+            <joint_name>right_wheel_joint</joint_name>
+        </plugin>
+
     </gazebo>
 
 

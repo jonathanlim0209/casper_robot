@@ -6,6 +6,7 @@
     <xacro:property name="materials_included" value="false"/>
     <xacro:include filename="materials.xacro"/>
     <xacro:include filename="camera.xacro"/>
+    <xacro:include filename="lidar.xacro"/>
 
     
 
