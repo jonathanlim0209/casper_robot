@@ -26,7 +26,7 @@ def generate_launch_description():
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'false'}.items()
+                )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
     )
 
 
@@ -55,13 +55,14 @@ def generate_launch_description():
 
     # Include the Gazebo launch file, provided by the gazebo_ros package
     gazebo = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
-                    launch_arguments={
-                        'world': world,
-                        'extra_gazebo_args': ['--ros-args --params-file ', gazebo_params_file]
-                    }.items()
-             )
+            PythonLaunchDescriptionSource([os.path.join(
+                get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
+                launch_arguments={
+                    'world': world,
+                    'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file,
+                    #'extra_gazebo_args': f'--ros-args --params-file {gazebo_params_file}'
+                }.items()
+         )
     
 
 
@@ -84,12 +85,12 @@ def generate_launch_description():
         arguments=["joint_broad"],
     )
 
-    delayed_diff_drive_spawner = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=spawn_entity,
-            on_exit=[diff_drive_spawner],
-        )
-    )
+    # delayed_diff_drive_spawner = RegisterEventHandler(
+    #     event_handler=OnProcessExit(
+    #         target_action=spawn_entity,
+    #         on_exit=[diff_drive_spawner],
+    #     )
+    # )
 
     delayed_joint_broad_spawner = RegisterEventHandler(
     event_handler=OnProcessExit(
@@ -98,17 +99,13 @@ def generate_launch_description():
     )
     )
 
-
-    bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')
-    ros_gz_bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        arguments=[
-            '--ros-args',
-            '-p',
-            f'config_file:={bridge_params}',
-        ]
+    delayed_diff_drive_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broad_spawner, 
+            on_exit=[diff_drive_spawner],
+        )
     )
+
 
     cv_launcher = Node(
             package='cv_launcher',
@@ -141,7 +138,6 @@ def generate_launch_description():
         spawn_entity,
         delayed_joint_broad_spawner,
         delayed_diff_drive_spawner,
-        ros_gz_bridge,
         #camera,
         cv_launcher
     ])
