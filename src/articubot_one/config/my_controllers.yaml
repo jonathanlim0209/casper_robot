@@ -25,6 +25,12 @@ diff_cont:
 
     use_stamped_vel: false
 
+    state_interfaces:
+      - velocity
+    
+    command_interfaces:
+      - velocity  
+
     #open_loop: true    
 
     # wheels_per_side: x
