@@ -110,6 +110,7 @@ bt_navigator_navigate_to_pose_rclcpp_node:
 controller_server:
   ros__parameters:
     use_sim_time: True
+    enable_stamped_cmd_vel: True
     controller_frequency: 20.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -294,6 +295,7 @@ smoother_server:
 
 behavior_server:
   ros__parameters:
+    enable_stamped_cmd_vel: True
     costmap_topic: local_costmap/costmap_raw
     footprint_topic: local_costmap/published_footprint
     cycle_frequency: 10.0
@@ -333,7 +335,8 @@ waypoint_follower:
       waypoint_pause_duration: 200
 
 velocity_smoother:
-  ros__parameters:
+  ros__parameters: 
+    enable_stamped_cmd_vel: True
     use_sim_time: True
     smoothing_frequency: 20.0
     scale_velocities: False

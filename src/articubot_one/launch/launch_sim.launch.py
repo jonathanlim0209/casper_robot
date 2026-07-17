@@ -113,6 +113,20 @@ def generate_launch_description():
             name='cv_window_node',
             output='screen'
         )
+    
+    slam_params_file = os.path.join(get_package_share_directory(package_name),'config','mapper_params_online_async.yaml')
+
+
+    slam_launcher = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('slam_toolbox'), 'launch', 'online_async_launch.py'
+        )]),
+        launch_arguments={
+            'use_sim_time': 'true',
+            'params_file': slam_params_file
+        }.items()
+    )
+
 
     # camera = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource([os.path.join(
@@ -139,5 +153,6 @@ def generate_launch_description():
         delayed_joint_broad_spawner,
         delayed_diff_drive_spawner,
         #camera,
-        cv_launcher
+        cv_launcher,
+        slam_launcher
     ])

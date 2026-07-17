@@ -27,6 +27,7 @@ diff_cont:
     open_loop: false 
 
     position_feedback: false
+    #position_feedback: true
 
     # wheels_per_side: x
     # wheel_separation_multiplier: x

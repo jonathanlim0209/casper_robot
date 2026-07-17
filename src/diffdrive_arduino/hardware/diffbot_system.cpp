@@ -177,17 +177,20 @@ hardware_interface::return_type DiffDriveArduinoHardware::read(
     return hardware_interface::return_type::ERROR;
   }
 
-
   double delta_seconds = period.seconds();
+  comms_.read_encoder_values(wheel_l_.enc, wheel_r_.enc);
 
   double pos_prev = wheel_l_.pos;
+  wheel_l_.pos = wheel_l_.calcEncAngle();
   wheel_l_.vel = (wheel_l_.pos - pos_prev) / delta_seconds;
 
   pos_prev = wheel_r_.pos;
+  wheel_r_.pos = wheel_r_.calcEncAngle();
   wheel_r_.vel = (wheel_r_.pos - pos_prev) / delta_seconds;
 
   return hardware_interface::return_type::OK;
 }
+
 
 hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
