@@ -70,7 +70,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
       return hardware_interface::CallbackReturn::ERROR;
     }
 
-    if (joint.state_interfaces.size() != 1)
+    if (joint.state_interfaces.size() != 2)
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("DiffDriveArduinoHardware"),
@@ -87,6 +87,15 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
         joint.state_interfaces[1].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
     }
+
+    if (joint.state_interfaces[1].name != hardware_interface::HW_IF_POSITION)
+    {
+      RCLCPP_FATAL(
+        rclcpp::get_logger("DiffDriveArduinoHardware"),
+        "Joint '%s' have '%s' as first state interface. '%s' expected.", joint.name.c_str(),
+        joint.state_interfaces[0].name.c_str(), hardware_interface::HW_IF_POSITION);
+      return hardware_interface::CallbackReturn::ERROR;
+    }
   }
 
   return hardware_interface::CallbackReturn::SUCCESS;
@@ -101,6 +110,12 @@ std::vector<hardware_interface::StateInterface> DiffDriveArduinoHardware::export
 
   state_interfaces.emplace_back(hardware_interface::StateInterface(
     wheel_r_.name, hardware_interface::HW_IF_VELOCITY, &wheel_r_.vel));
+
+  state_interfaces.emplace_back(hardware_interface::StateInterface(
+    wheel_l_.name, hardware_interface::HW_IF_POSITION, &wheel_l_.pos));
+
+  state_interfaces.emplace_back(hardware_interface::StateInterface(
+    wheel_r_.name, hardware_interface::HW_IF_POSITION, &wheel_r_.pos));
 
   return state_interfaces;
 }
