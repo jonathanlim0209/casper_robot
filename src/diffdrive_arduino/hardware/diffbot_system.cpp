@@ -48,6 +48,16 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
   wheel_l_.setup(cfg_.left_wheel_name, cfg_.counts_per_rev);
   wheel_r_.setup(cfg_.right_wheel_name, cfg_.counts_per_rev);
 
+  wheel_l_.pos = 0.0;
+  wheel_l_.vel = 0.0;
+  wheel_l_.cmd = 0.0;
+  wheel_l_.enc = 0;
+
+  wheel_r_.pos = 0.0;
+  wheel_r_.vel = 0.0;
+  wheel_r_.cmd = 0.0;
+  wheel_r_.enc = 0;
+
 
   for (const hardware_interface::ComponentInfo & joint : info_.joints)
   {
@@ -84,7 +94,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
       RCLCPP_FATAL(
         rclcpp::get_logger("DiffDriveArduinoHardware"),
         "Joint '%s' have '%s' as second state interface. '%s' expected.", joint.name.c_str(),
-        joint.state_interfaces[1].name.c_str(), hardware_interface::HW_IF_VELOCITY);
+        joint.state_interfaces[0].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
     }
 
@@ -93,7 +103,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
       RCLCPP_FATAL(
         rclcpp::get_logger("DiffDriveArduinoHardware"),
         "Joint '%s' have '%s' as first state interface. '%s' expected.", joint.name.c_str(),
-        joint.state_interfaces[0].name.c_str(), hardware_interface::HW_IF_POSITION);
+        joint.state_interfaces[1].name.c_str(), hardware_interface::HW_IF_POSITION);
       return hardware_interface::CallbackReturn::ERROR;
     }
   }
