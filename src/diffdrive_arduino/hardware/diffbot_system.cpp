@@ -45,8 +45,8 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
 
   
 
-  wheel_l_.setup(cfg_.left_wheel_name);
-  wheel_r_.setup(cfg_.right_wheel_name);
+  wheel_l_.setup(cfg_.left_wheel_name, cfg_.counts_per_rev);
+  wheel_r_.setup(cfg_.right_wheel_name, cfg_.counts_per_rev);
 
 
   for (const hardware_interface::ComponentInfo & joint : info_.joints)

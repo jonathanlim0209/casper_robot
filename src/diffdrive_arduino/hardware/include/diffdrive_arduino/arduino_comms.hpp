@@ -93,7 +93,7 @@ public:
 
   void read_encoder_values(int &val_1, int &val_2)
 {
-    std::string response = sendMsg("e\r");
+    std::string response = send_msg("e\r");
 
     std::string delimiter = " ";
     size_t del_pos = response.find(delimiter);
