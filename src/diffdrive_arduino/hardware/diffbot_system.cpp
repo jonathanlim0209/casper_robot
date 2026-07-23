@@ -226,14 +226,13 @@ hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::wr
     return hardware_interface::return_type::ERROR;
   }
 
+  // Command sent is in rad/s, done by dividing linear velocity by wheel radius.
   int motor_l_speed = wheel_l_.cmd;
-  int motor_r_speed = wheel_r_.cmd;
+  int motor_r_speed = wheel_r_.cmd;  
 
-  // Simple, robust logging without needing a clock reference
-  RCLCPP_INFO(
-    rclcpp::get_logger("DiffDriveArduinoHardware"),
-    "Commands -> Left: %.3f rad/s (%d), Right: %.3f rad/s (%d)",
-    wheel_l_.cmd, motor_l_speed, wheel_r_.cmd, motor_r_speed);
+  // // Need to convert the command to ticks per second, which is done by multiplying the command by the counts per revolution and dividing by 2*pi.
+  // motor_l_speed = static_cast<int>(motor_l_speed * cfg_.enc_counts_per_rev / (2 * M_PI));
+  // motor_r_speed = static_cast<int>(motor_r_speed * cfg_.enc_counts_per_rev / (2 * M_PI));
 
   comms_.set_motor_values(motor_l_speed, motor_r_speed);
   return hardware_interface::return_type::OK;
