@@ -228,6 +228,15 @@ hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::wr
 
   int motor_l_speed = wheel_l_.cmd;
   int motor_r_speed = wheel_r_.cmd;
+
+  // Print at most once every 500 milliseconds (0.5s)
+  RCLCPP_INFO_THROTTLE(
+    rclcpp::get_logger("DiffDriveArduinoHardware"),
+    *get_clock(), // Requires access to node clock or node clock instance
+    500,          // Time interval in milliseconds
+    "Commands -> Left: %.3f rad/s, Right: %.3f rad/s",
+    wheel_l_.cmd, wheel_r_.cmd);
+
   comms_.set_motor_values(motor_l_speed, motor_r_speed);
   return hardware_interface::return_type::OK;
 }
