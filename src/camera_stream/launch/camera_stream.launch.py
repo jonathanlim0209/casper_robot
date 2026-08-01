@@ -17,7 +17,7 @@ def generate_launch_description():
     # Zero-latency pipe: nobuffer + instant packet flushing
     pipeline_cmd = (
         "libcamera-vid -t 0 -n --inline --width 640 --height 480 --framerate 20 "
-        "--bitrate 500000 --intra 10 --vflip --hflip -o - | "
+        "--bitrate 1200000 --gop 20 --intra 10 --vflip --hflip -o - | "
         "ffmpeg -fflags nobuffer -flags low_delay -i - -c copy -f rtsp -rtsp_transport tcp -flush_packets 1 rtsp://localhost:8554/test"
     )
 
