@@ -18,7 +18,7 @@ def generate_launch_description():
     pipeline_cmd = (
         "libcamera-vid -t 0 -n --inline --width 640 --height 480 --framerate 20 "
         "--bitrate 400000 --g 10 --intra 10 --vflip --hflip -o - | "
-        "ffmpeg -re -i - -c copy -f rtsp -rtsp_transport tcp -max_delay 500000 -pkt_size 1316 -flush_packets 1 rtsp://localhost:8554/test"
+        "ffmpeg -i - -c copy -f rtsp -rtsp_transport udp -max_delay 50000 -pkt_size 1316 -flush_packets 1 rtsp://localhost:8554/test"
     )
 
     camera_pipeline_node = ExecuteProcess(
