@@ -10,6 +10,7 @@
 
 <!-- Wheel properties -->
     <xacro:property name="wheel_radius" value="0.0335"/>
+    <!-- speed of 1m/s = 30rad/s-->
     <xacro:property name="wheel_thickness" value="0.024"/>
     <xacro:property name="wheel_mass" value="0.05"/>
     <xacro:property name="wheel_offset_x_from_chassis_link" value="0.068"/>
