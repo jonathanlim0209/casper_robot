@@ -230,11 +230,12 @@ hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::wr
   int motor_l_speed = wheel_l_.cmd;
   int motor_r_speed = wheel_r_.cmd;  
 
-  // Logs once every 1000 milliseconds (1 second)
+  rclcpp::Clock steady_clock(RCL_STEADY_TIME);
+
   RCLCPP_INFO_THROTTLE(
     rclcpp::get_logger("DiffDriveArduinoHardware"),
-    *rclcpp::Clock().get_clock(),
-    1000,
+    steady_clock,
+    1000, // interval in milliseconds
     "Sending to Arduino -> Left: %d, Right: %d",
     motor_l_speed, motor_r_speed
   );
