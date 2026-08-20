@@ -87,6 +87,13 @@ def generate_launch_description():
         )
     )
 
+    watchdog_node = Node(
+        package="watch_dog",
+        executable="cmd_vel_watchdog",
+        name="cmd_vel_watchdog",
+        parameters=[{'timeout_sec': 0.4}],
+    )
+
     camera_stream_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -134,5 +141,6 @@ def generate_launch_description():
         delayed_controller_manager,
         delayed_diff_drive_spawner,
         delayed_joint_broad_spawner,
+        watchdog_node,
         camera_stream_launch
     ])
