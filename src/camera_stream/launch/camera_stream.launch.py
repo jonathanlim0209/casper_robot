@@ -16,8 +16,8 @@ def generate_launch_description():
     # 2. Launch pipeline with TCP transport and wallclock timestamps to prevent stream crashes
     # Zero-latency pipe: nobuffer + instant packet flushing
     pipeline_cmd = (
-        "libcamera-vid -t 0 -n --inline --width 640 --height 480 --framerate 20 "
-        "--bitrate 400000 --g 10 --intra 10 --vflip --hflip -o - | "
+        "libcamera-vid -t 0 -n --inline --width 480 --height 320 --framerate 15 "
+        "--bitrate 250000 --g 30 --intra 30 --vflip --hflip -o - | "
         "ffmpeg -i - -c copy -f rtsp -rtsp_transport udp -max_delay 50000 -pkt_size 1316 -flush_packets 1 rtsp://localhost:8554/test"
     )
 
